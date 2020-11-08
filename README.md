@@ -20,8 +20,8 @@ You return JSON error message, the error is presented to the user and save is re
 
 ```json
 {
-    title: "Error",
-    description: "Whatever action you need the user to take"
+    "title": "Error",
+    "description": "Whatever action you need the user to take"
 }
 ```
 
