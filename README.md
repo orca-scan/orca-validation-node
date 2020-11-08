@@ -10,13 +10,9 @@ This is a fully working example of how to [validate barcode scans](https://orcas
 4. The information is sent to your Validation URL
 5. Your system validates the information entered
 
-**If Valid**
+**If Valid**: You return a HTTP 200 with no body and the app save proceeds.
 
-You return a HTTP 200 with no body and the app save proceeds.
-
-**If Invalid**
-
-You return JSON error message, the error is presented to the user and save is rejected.
+**If Invalid**: You return JSON error message, the error is presented to the user and save is rejected.
 
 ```json
 {
