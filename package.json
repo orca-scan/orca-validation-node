@@ -1,6 +1,6 @@
 {
   "name": "orca-validation-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "How to validate barcode scans using Orca Scan and Node.js",
   "main": "index.js",
   "scripts": {
