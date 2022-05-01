@@ -1,24 +1,17 @@
 {
-  "name": "orca-validation-node",
-  "version": "1.0.1",
-  "description": "How to validate barcode scans using Orca Scan and Node.js",
-  "main": "index.js",
+  "name": "orca-webhook-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/orca-scan/orca-validation-node.git"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/orca-scan/orca-validation-node/issues"
-  },
-  "homepage": "https://github.com/orca-scan/orca-validation-node#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "axios": "^0.26.1",
+    "express": "^4.17.3"
   }
 }
