@@ -80,6 +80,8 @@ app.post('/', function(request, response){
     //return HTTP Status 204 (No Content)
     response.status(204).send();
 });
+
+app.listen(3000, () => console.log('Example app is listening on port 3000.'));
 ```
 
 ## Test server locally against Orca Cloud
