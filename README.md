@@ -26,19 +26,19 @@ npm install
 npm start
 ```
 
-Your server will now be running on port 5000.
+Your server will now be running on port 3000.
 
 You can emulate an Orca Scan Validation input using [cURL](https://dev.to/ibmdeveloper/what-is-curl-and-why-is-it-all-over-api-docs-9mh) by running the following:
 
 ```bash
-curl --location --request POST 'http://127.0.0.1:5000/' \
+curl --location --request POST 'http://localhost:3000/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "___orca_sheet_name": "Vehicle Checks",
     "___orca_user_email": "hidden@requires.https",
     "Barcode": "orca-scan-test",
     "Date": "2022-04-19T16:45:02.851Z",
-    "Name": Orca Scan Validation Example,
+    "Name": "Orca Scan Validation"
 }'
 ```
 
