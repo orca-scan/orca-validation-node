@@ -4,7 +4,12 @@ Example of [how to validate barcode scans in real-time](https://orcascan.com/gui
 
 ## Install
 
-First ensure you have [NodeJS](https://nodejs.org/) installed:
+First ensure you have [Node.js](https://nodejs.org/) installed:
+
+```bash
+# should return 11 or higher
+node -v
+```
 
 Then execute the following:
 
