@@ -8,7 +8,7 @@ app.use(express.json());
 app.post('/', function(request, response){
     data = request.body;
 
-    // dubug purpose: show in console raw data received
+    // debug purpose: show in console raw data received
     console.log("Request received: \n"+JSON.stringify(data, null, 2));
 
     // NOTE:
@@ -26,8 +26,8 @@ app.post('/', function(request, response){
         return;
     }
 
-    //return HTTP Status 204 (No Content)
-    response.status(204).send();
+    //return HTTP Status 200 with no body
+    response.status(200).send();
 });
 
 app.listen(3000, () => console.log('Example app is listening on port 3000.'));
