@@ -63,4 +63,5 @@ app.post('/', function(request, response) {
     return response.status(204).send();
 });
 
-app.listen(3000, () => console.log('Listening on port 3000. Ready for Orca Scan requests.'));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log('Listening on port ' + port + '. Ready for Orca Scan requests.'));

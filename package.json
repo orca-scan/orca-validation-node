@@ -1,7 +1,7 @@
 {
   "name": "orca-validation-node",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example Orca Scan validation webhook using Node.js and Express",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

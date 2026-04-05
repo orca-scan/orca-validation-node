@@ -115,13 +115,15 @@ Set a secret in Orca Scan (**Integrations > Events API > Secret**) and Orca Scan
 
 [Chat to us live](https://orcascan.com/#chat) if you run into any issues.
 
-## Examples in other langauges
-* [orca-validation-dotnet](https://github.com/orca-scan/orca-validation-dotnet)
-* [orca-validation-python](https://github.com/orca-scan/orca-validation-python)
-* [orca-validation-go](https://github.com/orca-scan/orca-validation-go)
-* [orca-validation-java](https://github.com/orca-scan/orca-validation-java)
-* [orca-validation-php](https://github.com/orca-scan/orca-validation-php)
-* [orca-validation-node](https://github.com/orca-scan/orca-validation-node)
+## Examples in other languages
+
+| Language | Repository                                                                    |
+|----------|-------------------------------------------------------------------------------|
+| C#       | [orca-validation-dotnet](https://github.com/orca-scan/orca-validation-dotnet) |
+| Python   | [orca-validation-python](https://github.com/orca-scan/orca-validation-python) |
+| Go       | [orca-validation-go](https://github.com/orca-scan/orca-validation-go)         |
+| Java     | [orca-validation-java](https://github.com/orca-scan/orca-validation-java)     |
+| PHP      | [orca-validation-php](https://github.com/orca-scan/orca-validation-php)       |
 
 ## License
 
