@@ -26,11 +26,11 @@ Fields starting with `___` are Orca system fields. Everything else matches your 
 
 Your server responds to tell Orca Scan what to do:
 
-| Response                          | What happens                                                 |
-|-----------------------------------|--------------------------------------------------------------|
-| HTTP `204`                        | Allow - data saves as-is                                     |
-| HTTP `200` with fields            | Modify - Orca Scan updates the fields you return, then saves |
-| HTTP `400` with `___orca_message` | Reject - user sees an error and the save is blocked          |
+Response                          | What happens
+----------------------------------|-------------------------------------------------------------
+HTTP `204`                        | Allow - data saves as-is
+HTTP `200` with fields            | Modify - Orca Scan updates the fields you return, then saves
+HTTP `400` with `___orca_message` | Reject - user sees an error and the save is blocked
 
 ### In-app messages
 
@@ -46,9 +46,13 @@ You can show messages in the app by including `___orca_message` in your response
 }
 ```
 
-`display` controls how the message appears. `"notification"` shows a brief banner, `"dialog"` shows a popup the user must dismiss.
-
-`type` controls the colour: `"success"` (green), `"warning"` (yellow), or `"error"` (red).
+Property  | Options          | Effect
+----------|------------------|-----------------------------------
+`display` | `"notification"` | Brief banner at the top of the app
+          | `"dialog"`       | Popup the user must dismiss
+`type`    | `"success"`      | Green
+          | `"warning"`      | Yellow
+          | `"error"`        | Red
 
 > Your server must respond within **750ms** or Orca Scan will ignore the response.
 
@@ -59,27 +63,20 @@ See [server.js](server.js) for working examples of all three response types, plu
 You'll need [Node.js](https://nodejs.org/) v11+ installed (`node -v` to check) and an [Orca Scan](https://orcascan.com) account.
 
 ```bash
-# download this example
 git clone https://github.com/orca-scan/orca-validation-node.git
-
-# go into the folder
 cd orca-validation-node
-
-# install dependencies
 npm install
-
-# start the server
 npm start
 ```
 
-Your server is now running at `http://localhost:3000`.
+Your server is now running at `http://localhost:8888`.
 
 ## Try it
 
 Use [cURL](https://curl.se) to send a test request from your terminal (just like Orca Scan would):
 
 ```bash
-curl -X POST http://localhost:3000 \
+curl -X POST http://localhost:8888 \
   -H 'Content-Type: application/json' \
   -H 'orca-sheet-name: Vehicle Checks' \
   -H 'orca-secret: your-secret-here' \
@@ -100,7 +97,7 @@ curl -X POST http://localhost:3000 \
 Orca Scan needs to reach your server over the internet. During development, [localtunnel](https://github.com/localtunnel/localtunnel) creates a temporary public URL that points to your laptop:
 
 ```bash
-npx localtunnel --port 3000
+npx localtunnel --port 8888
 ```
 
 Copy the URL it gives you and paste it in Orca Scan under **Integrations > Events API > Validation URL**.
@@ -117,13 +114,13 @@ Set a secret in Orca Scan (**Integrations > Events API > Secret**) and Orca Scan
 
 ## Examples in other languages
 
-| Language | Repository                                                                    |
-|----------|-------------------------------------------------------------------------------|
-| C#       | [orca-validation-dotnet](https://github.com/orca-scan/orca-validation-dotnet) |
-| Python   | [orca-validation-python](https://github.com/orca-scan/orca-validation-python) |
-| Go       | [orca-validation-go](https://github.com/orca-scan/orca-validation-go)         |
-| Java     | [orca-validation-java](https://github.com/orca-scan/orca-validation-java)     |
-| PHP      | [orca-validation-php](https://github.com/orca-scan/orca-validation-php)       |
+Language | Repository
+---------|------------------------------------------------------------------------------
+C#       | [orca-validation-dotnet](https://github.com/orca-scan/orca-validation-dotnet)
+Python   | [orca-validation-python](https://github.com/orca-scan/orca-validation-python)
+Go       | [orca-validation-go](https://github.com/orca-scan/orca-validation-go)
+Java     | [orca-validation-java](https://github.com/orca-scan/orca-validation-java)
+PHP      | [orca-validation-php](https://github.com/orca-scan/orca-validation-php)
 
 ## License
 

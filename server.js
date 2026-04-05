@@ -1,6 +1,6 @@
 const express = require('express');
-
 const app = express();
+const port = process.env.PORT || 8888;
 
 // automatically parse incoming JSON request bodies
 app.use(express.json());
@@ -63,5 +63,6 @@ app.post('/', function(request, response) {
     return response.status(204).send();
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log('Listening on port ' + port + '. Ready for Orca Scan requests.'));
+app.listen(port, function() {
+    console.log('Listening on port ' + port + '. Ready for Orca Scan requests.');
+});
