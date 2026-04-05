@@ -1,105 +1,119 @@
 # orca-validation-node
 
-Example of [how to validate barcode scans in real-time](https://orcascan.com/guides/how-to-validate-barcode-scans-in-real-time-56928ff9) using [NodeJS](https://nodejs.org/) and [express](https://expressjs.com/) framework.
+This is a working example of how to build a [Validation URL](https://orcascan.com/guides/barcode-scan-validation-webhook-56928ff9) for [Orca Scan](https://orcascan.com) using Node.js and Express.
 
-## Install
+**Why?** when someone scans a barcode in the Orca Scan app, you might want to check the data **before** it gets saved. A Validation URL lets you:
 
-First ensure you have [Node.js](https://nodejs.org/) installed:
+- **Reject bad data** - block a scan if a value is missing, out of range, or a duplicate
+- **Modify data** - auto-format, trim, or fill in fields before saving
+- **Guide the user** - show a success, warning, or error message right in the app
 
-```bash
-# should return 11 or higher
-node -v
+## How it works
+
+When a user scans a barcode or edits a field, the app sends the row data to your server as a POST request:
+
+```json
+{
+    "___orca_sheet_name": "Vehicle Checks",
+    "___orca_user_email": "user@example.com",
+    "___orca_row_id": "abc123",
+    "Barcode": "orca-scan-test",
+    "Name": "Orca Scan"
+}
 ```
 
-Then execute the following:
+Fields starting with `___` are Orca system fields. Everything else matches your sheet column names exactly _(case and spaces matter)_.
+
+Your server responds to tell Orca Scan what to do:
+
+| Response                          | What happens                                                 |
+|-----------------------------------|--------------------------------------------------------------|
+| HTTP `204`                        | Allow - data saves as-is                                     |
+| HTTP `200` with fields            | Modify - Orca Scan updates the fields you return, then saves |
+| HTTP `400` with `___orca_message` | Reject - user sees an error and the save is blocked          |
+
+### In-app messages
+
+You can show messages in the app by including `___orca_message` in your response:
+
+```json
+{
+    "___orca_message": {
+        "display": "notification",
+        "type": "success",
+        "message": "Item verified"
+    }
+}
+```
+
+`display` controls how the message appears. `"notification"` shows a brief banner, `"dialog"` shows a popup the user must dismiss.
+
+`type` controls the colour: `"success"` (green), `"warning"` (yellow), or `"error"` (red).
+
+> Your server must respond within **750ms** or Orca Scan will ignore the response.
+
+See [server.js](server.js) for working examples of all three response types, plus in-app notifications and secret verification.
+
+## Getting started
+
+You'll need [Node.js](https://nodejs.org/) v11+ installed (`node -v` to check) and an [Orca Scan](https://orcascan.com) account.
 
 ```bash
-# download this example code
+# download this example
 git clone https://github.com/orca-scan/orca-validation-node.git
 
-# go into the new directory
+# go into the folder
 cd orca-validation-node
 
 # install dependencies
 npm install
-```
 
-## Run
-
-```bash
-# start the project
+# start the server
 npm start
 ```
 
-Your server will now be running on port 3000.
+Your server is now running at `http://localhost:3000`.
 
-You can emulate an Orca Scan Validation input using [cURL](https://dev.to/ibmdeveloper/what-is-curl-and-why-is-it-all-over-api-docs-9mh) by running the following:
+## Try it
+
+Use [cURL](https://curl.se) to send a test request from your terminal (just like Orca Scan would):
 
 ```bash
-curl --location --request POST 'http://localhost:3000/' \
---header 'Content-Type: application/json' \
---data-raw '{
+curl -X POST http://localhost:3000 \
+  -H 'Content-Type: application/json' \
+  -H 'orca-sheet-name: Vehicle Checks' \
+  -H 'orca-secret: your-secret-here' \
+  -d '{
     "___orca_sheet_name": "Vehicle Checks",
-    "___orca_user_email": "hidden@requires.https",
+    "___orca_user_email": "user@example.com",
+    "___orca_row_id": "abc123",
     "Barcode": "orca-scan-test",
-    "Date": "2022-04-19T16:45:02.851Z",
-    "Name": "Orca Scan Validation"
-}'
+    "Name": "Orca Scan"
+  }'
 ```
 
-### Important things to note
+- **Name ≤ 20 chars** → empty `HTTP 204` response (data allowed)
+- **Name > 20 chars** → `HTTP 400` with an error message (data rejected)
 
-1. Only Orca Scan system fields start with `___`
-2. Properties in the JSON payload are an exact match to the  field names in your sheet _(case and space)_
+## Connect to Orca Scan
 
-## How this example works
-
-This [example](server.js) uses the [express](https://expressjs.com/) framework:
-
-```js
-const app = express();
-// Parse JSON bodies for this app.
-app.use(express.json());
-
-app.post('/', function(request, response){
-    data = request.body;
-
-    // debug purpose: show in console raw data received
-    console.log("Request received: \n"+JSON.stringify(data, null, 2));
-
-    // NOTE:
-    // orca system fields start with ___
-    // you can access the value of each field using the field name (data.Name, data.Barcode, data.Location)
-    const name = data.Name
-
-    //validation example
-    if(name.length > 20){
-        //return json error message
-        response.json({
-            "title": "Invalid Name",
-            "message": "Name cannot contain more than 20 characters",
-        }).send();
-        return;
-    }
-
-    //return HTTP Status 200 with no body
-    response.status(200).send();
-});
-
-app.listen(3000, () => console.log('Example app is listening on port 3000.'));
-```
-
-## Test server locally against Orca Cloud
-
-To expose the server securely from localhost and test it easily against the real Orca Cloud environment you can use [Secure Tunnels](https://ngrok.com/docs/secure-tunnels#what-are-ngrok-secure-tunnels). Take a look at [Ngrok](https://ngrok.com/) or [Cloudflare](https://www.cloudflare.com/).
+Orca Scan needs to reach your server over the internet. During development, [localtunnel](https://github.com/localtunnel/localtunnel) creates a temporary public URL that points to your laptop:
 
 ```bash
-ngrok http 5000
+npx localtunnel --port 3000
 ```
 
-## Troubleshooting
+Copy the URL it gives you and paste it in Orca Scan under **Integrations > Events API > Validation URL**.
 
-If you run into any issues not listed here, please [open a ticket](https://github.com/orca-scan/orca-validation-node/issues).
+When you're ready to go live, deploy to any Node.js host (e.g. [Railway](https://railway.app), [Render](https://render.com)) and update the URL.
+
+## Security
+
+Set a secret in Orca Scan (**Integrations > Events API > Secret**) and Orca Scan will send it as an `orca-secret` header with every request. Verify it on your server to make sure the request is genuine. See the commented example in [server.js](server.js).
+
+## Help
+
+[Chat to us live](https://orcascan.com/#chat) if you run into any issues.
 
 ## Examples in other langauges
 * [orca-validation-dotnet](https://github.com/orca-scan/orca-validation-dotnet)
@@ -108,10 +122,6 @@ If you run into any issues not listed here, please [open a ticket](https://githu
 * [orca-validation-java](https://github.com/orca-scan/orca-validation-java)
 * [orca-validation-php](https://github.com/orca-scan/orca-validation-php)
 * [orca-validation-node](https://github.com/orca-scan/orca-validation-node)
-
-## History
-
-For change-log, check [releases](https://github.com/orca-scan/orca-validation-node/releases).
 
 ## License
 

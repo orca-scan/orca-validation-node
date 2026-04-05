@@ -1,5 +1,5 @@
 {
-  "name": "orca-webhook-node",
+  "name": "orca-validation-node",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.26.1",
     "express": "^4.17.3"
   }
 }
