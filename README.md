@@ -27,7 +27,7 @@ Fields starting with `___` are Orca system fields. Everything else matches your 
 Your server responds to tell Orca Scan what to do:
 
 Response                          | What happens
-----------------------------------|-------------------------------------------------------------
+:---------------------------------|:------------------------------------------------------------
 HTTP `204`                        | Allow - data saves as-is
 HTTP `200` with fields            | Modify - Orca Scan updates the fields you return, then saves
 HTTP `400` with `___orca_message` | Reject - user sees an error and the save is blocked
@@ -47,7 +47,7 @@ You can show messages in the app by including `___orca_message` in your response
 ```
 
 Property  | Options          | Effect
-----------|------------------|-----------------------------------
+:---------|:-----------------|:----------------------------------
 `display` | `"notification"` | Brief banner at the top of the app
           | `"dialog"`       | Popup the user must dismiss
 `type`    | `"success"`      | Green
@@ -115,7 +115,7 @@ Set a secret in Orca Scan (**Integrations > Events API > Secret**) and Orca Scan
 ## Examples in other languages
 
 Language | Repository
----------|------------------------------------------------------------------------------
+:--------|:-----------------------------------------------------------------------------
 C#       | [orca-validation-dotnet](https://github.com/orca-scan/orca-validation-dotnet)
 Python   | [orca-validation-python](https://github.com/orca-scan/orca-validation-python)
 Go       | [orca-validation-go](https://github.com/orca-scan/orca-validation-go)
